@@ -155,7 +155,8 @@ class IMAP_Copy(object):
                 flags_start = flags_line.index('FLAGS (') + len('FLAGS (')
                 flags_end = flags_line.index(')', flags_start)
 
-                flags = '(' + flags_line[flags_start:flags_end] + ')'
+                old_flags = '(' + flags_line[flags_start:flags_end] + ')'
+                flags = old_flags.replace(" \\Recent","")
 
                 internaldate_start = flags_line.index('INTERNALDATE ') + len('INTERNALDATE ')
                 internaldate_end = flags_line.find(' RFC822', internaldate_start)
@@ -192,6 +193,7 @@ class IMAP_Copy(object):
             typ, data = connection.list(source_folder)
             for d in data:
                 if d:
+                    d = d.decode('utf-8')
                     l_resp = d.split('"')
                     # response = '(\HasChildren) "/" INBOX'
                     if len(l_resp) == 3:
