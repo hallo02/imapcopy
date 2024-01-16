@@ -67,10 +67,6 @@ class IMAP_Copy(object):
         # Detecting delimiter on destination server
         code, folder_list = connection.list()
 
-        print("le list")
-        print(connection.list('INBOX'))
-        print("le list end")
-
         folder_name_list = []
         for box in folder_list:
             parts = box.decode('utf-8').split('"')
@@ -162,9 +158,7 @@ class IMAP_Copy(object):
                 flags_end = flags_line.index(')', flags_start)
 
                 old_flags = '(' + flags_line[flags_start:flags_end] + ')'
-                print("old_flags", old_flags)
                 flags = old_flags.replace(" \\Recent","")
-                print("flags", flags)
 
                 internaldate_start = flags_line.index('INTERNALDATE ') + len('INTERNALDATE ')
                 internaldate_end = flags_line.find(' RFC822', internaldate_start)
@@ -205,13 +199,6 @@ class IMAP_Copy(object):
                     d = d.decode('utf-8')
                     l_resp = d.split('"')
                     # response = '(\HasChildren) "/" INBOX'
-                    print("d",d)
-                    print("l_resp",l_resp,len(l_resp))
-
-                    # if len(parts) == 5:
-                    #     folder_name_list.append(parts[3].strip())
-                    # elif len(parts) == 3:
-                    #     folder_name_list.append(parts[2].strip())
 
                     len_resp = len(l_resp)
                     if len_resp == 3 or len_resp == 5:
@@ -220,9 +207,7 @@ class IMAP_Copy(object):
 
                         if ' ' in source_mbox and '"' not in source_mbox:
                             source_mbox = '"%s"' % source_mbox
-                       
-                        print("source_mbox", source_mbox, len(source_mbox))
-                        print("source_folder", source_folder, len(source_folder))
+
                         # make sure we don't have a recursive loop
                         if source_mbox != source_folder:
                             # maybe better use regex to replace only start of the souce name
