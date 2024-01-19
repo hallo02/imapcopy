@@ -159,6 +159,7 @@ class IMAP_Copy(object):
 
                 old_flags = '(' + flags_line[flags_start:flags_end] + ')'
                 flags = old_flags.replace(" \\Recent","")
+                flags = flags.replace("\\Recent","")
 
                 internaldate_start = flags_line.index('INTERNALDATE ') + len('INTERNALDATE ')
                 internaldate_end = flags_line.find(' RFC822', internaldate_start)
